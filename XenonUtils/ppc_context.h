@@ -9,6 +9,7 @@
 #include <climits>
 #include <cmath>
 #include <csetjmp>
+#include <csignal>
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
