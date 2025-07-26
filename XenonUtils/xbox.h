@@ -203,7 +203,7 @@ typedef struct _XRTL_CRITICAL_SECTION
 {
     XDISPATCHER_HEADER Header;
     int32_t LockCount;
-    int32_t RecursionCount;
+    be<int32_t> RecursionCount;
     uint32_t OwningThread;
 } XRTL_CRITICAL_SECTION;
 
