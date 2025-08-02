@@ -195,7 +195,7 @@ Image Xex2LoadImage(const uint8_t* data, size_t dataSize)
     }
 
     image.data = std::move(result);
-    image.size = security->imageSize;
+    image.size = imageSize;
 
     // Map image
     const auto* dosHeader = reinterpret_cast<IMAGE_DOS_HEADER*>(image.data.get());
@@ -211,6 +211,13 @@ Image Xex2LoadImage(const uint8_t* data, size_t dataSize)
     if (xex2EntryPointPtr != nullptr)
     {
         image.entry_point = *reinterpret_cast<const be<uint32_t>*>(xex2EntryPointPtr);
+    }
+    const void* xex2ResourceInfoPtr = getOptHeaderPtr(data, XEX_HEADER_RESOURCE_INFO);
+    if (xex2ResourceInfoPtr != nullptr)
+    {
+        const Xex2ResourceInfo* resourceInfo = reinterpret_cast<const Xex2ResourceInfo*>(xex2ResourceInfoPtr);
+        image.resource_offset = resourceInfo->offset;
+        image.resource_size = resourceInfo->sizeOfData;
     }
 
     const auto numSections = ntHeaders->FileHeader.NumberOfSections;
